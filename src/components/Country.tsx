@@ -1,19 +1,20 @@
-import React, { useMemo, useState } from 'react';
-import { getData } from '../utils/corona';
+import React, { useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
 // import { Total } from './Total';
 import { Form, Input } from 'semantic-ui-react';
 import { CountryTable } from './Table';
+import useSWR from 'swr';
+import { FormatArray } from '../utils/FormatArray';
+
+const fetcher = (url: string) => fetch(url).then(r => r.json());
 
 export function Country() {
-  const [countries, setCountries] = useState<Data[]>();
   const [country, setCountry] = useState<string>('');
 
-  useMemo(async () => {
-    const res = await getData('');
-    setCountries(res);
-    console.log(res);
-  }, []);
+  const url =
+    'https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query?f=json&where=Confirmed%20%3E%200&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Confirmed%20desc&resultOffset=0&resultRecordCount=200&cacheHint=true';
+
+  const { data, error } = useSWR<any>(url, fetcher);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCountry(event.target.value);
@@ -23,10 +24,12 @@ export function Country() {
     event.preventDefault();
   };
 
-  const filteredData = countries?.filter(({ name }) =>
+  const filteredData = FormatArray(data?.features)?.filter(({ name }) =>
     country ? name.toLowerCase().indexOf(country.toLowerCase()) >= 0 : true
   ) as Data[];
 
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
   return (
     <>
       {/* <Total /> */}

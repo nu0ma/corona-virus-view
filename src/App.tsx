@@ -1,22 +1,8 @@
 import React from 'react';
-import { Country } from './components/Country';
-import styled from 'styled-components';
+import { Home } from './pages/Home';
 
 function App() {
-  return (
-    <Wrapper>
-      <div>
-        <h1>Corona Virus Statistics</h1>
-      </div>
-      <Country />
-    </Wrapper>
-  );
+  return <Home />;
 }
 
 export default App;
-
-const Wrapper = styled.div`
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 4%;
-`;
