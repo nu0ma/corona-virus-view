@@ -4,7 +4,7 @@ export const setCountryEmoji = (countryName: string) =>
   flag(countryName) ? `${flag(countryName)} ${countryName}` : countryName;
 
 // arg:data.features
-export const FormatArray = (arr: any[]) => {
+export const FormatArray = (arr: Feature[] | undefined) => {
   if (arr !== undefined) {
     const formattedArray = arr
       .map((f: any) => f.attributes)

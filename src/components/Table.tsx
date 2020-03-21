@@ -2,7 +2,15 @@ import React, { FC } from 'react';
 import { Table } from 'antd';
 
 type CountryTableProps = {
-  dataSource: Data[];
+  dataSource:
+    | {
+        name: string;
+        coordinates: any[];
+        confirmed: any;
+        deaths: any;
+        recovered: any;
+      }[]
+    | undefined;
 };
 
 const columns = [

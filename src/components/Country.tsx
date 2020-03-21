@@ -15,7 +15,7 @@ export function Country() {
   const url =
     'https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query?f=json&where=Confirmed%20%3E%200&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Confirmed%20desc&resultOffset=0&resultRecordCount=200&cacheHint=true';
 
-  const { data, error } = useSWR<any>(url, fetcher);
+  const { data, error } = useSWR<CoronaDataType>(url, fetcher);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCountry(event.target.value);
@@ -27,7 +27,7 @@ export function Country() {
 
   const filteredData = FormatArray(data?.features)?.filter(({ name }) =>
     country ? name.toLowerCase().indexOf(country.toLowerCase()) >= 0 : true
-  ) as Data[];
+  );
 
   if (error) return <div>failed to load</div>;
   if (!data) return <Spinner />;
