@@ -51,6 +51,11 @@ export function Country() {
 const StyledInput = styled(Input)`
   width: 500px;
   margin: 30px auto;
+  @media (max-width: 600px) {
+    width: 200px;
+    margin-left: 90px;
+    margin-right: 90px;
+  }
 `;
 const StyledForm = styled(Form)`
   width: 500px;
