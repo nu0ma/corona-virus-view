@@ -1,10 +1,11 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 // import { Total } from './Total';
 import { Form, Input } from 'semantic-ui-react';
 import { CountryTable } from './Table';
 import useSWR from 'swr';
 import { FormatArray } from '../utils/FormatArray';
+import Spinner from './Spinner';
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
@@ -29,7 +30,7 @@ export function Country() {
   ) as Data[];
 
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data) return <Spinner />;
   return (
     <>
       {/* <Total /> */}
